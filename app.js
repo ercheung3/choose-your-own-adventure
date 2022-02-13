@@ -1,7 +1,7 @@
 const prompt = require('prompt-sync')();
 //Global Variables
 var name = "";
-var pInv = [];
+const pInv = [];
 const bedroomItems = [];
 var endGame = "";
 
@@ -15,7 +15,7 @@ function chooseAdventure() {
 function resetAdventure() {
     console.clear();
     username = "";
-    pInv = [];
+    while(pInv.length > 0) pInv.pop();
     //Means that player took the items. FUTURE maybe initialize some items with Math.random()
     if(bedroomItems.length == 0) bedroomItems.push('Phone','Keys','Wallet');
     endGame = "";
@@ -30,7 +30,8 @@ function resetAdventure() {
  * @returns null
  */
 function checkInv() {
-    console.log(`You have these items in your inventory: ${pInv.toString()}`);
+    if(pInv.length == 0) console.log(`You have NOTHING in your inventory`);
+    else console.log(`You have these items in your inventory: ${pInv.toString()}`);
 }
 
 function hasItem(item) {
@@ -90,8 +91,30 @@ function indexValidChoice(statement,arrayPrompts) {
 function checkValidChoice(statement,arrayPrompts) {
     //Returns -1 for "" or null
     if(statement == "" || statement == null) return 'invalid';
-    if(arrayPrompts.includes(statement.toLowerCase())) return statement.toLowerCase();
-    else return 'invalid';
+    else if(arrayPrompts.includes(statement.toLowerCase())) return statement.toLowerCase();
+    //Global prompt answers: status (checks health) and inv (checks inventory)
+    else {
+        switch(statement.toLowerCase()) {
+            case 'inv': 
+                checkInv();
+                break;
+            case 'status':
+                console.log(`ADD STATUS FUNCTION!`);
+                break;
+            default:
+                break;
+        }
+    }
+    return 'invalid';
+}
+
+function zombieEncounter() {
+    let zombieChoice = "";
+    let zombieChoicePrompts = ['fight','run']
+    while(checkValidChoice(zombieChoice,zombieChoicePrompts) == 'invalid') zombieChoice = prompt(`Do you [fight] the zombie or try to [run] away? `);
+    zombieChoice = zombieChoice.toLowerCase();
+    if(zombieChoice == zombieChoicePrompts[0]) console.log("ADD A ZOMBIE FIGHT MECHANIC");
+    else if(zombieChoice == zombieChoicePrompts[1]) console.log("ADD AN ESCAPE MECHANIC");
 }
 
 function prologue() {
@@ -132,7 +155,7 @@ function leaveHouse() {
      if(leaveHouse == leaveHousePrompts[2]) {
         console.log(`You open the door as slowly as possible but a zombie hiding in a bush a few feet away finds you!`);
         //Maybe INCLUDE combat against zombies?
-        console.log(`You're Dead!`);
+        zombieEncounter();
     }
 }
 
