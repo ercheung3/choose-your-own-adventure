@@ -58,6 +58,17 @@ function hasItem(item) {
 }
 
 /**
+ * @name useItem
+ * @description Uses up an item for an interaction
+ * 
+ * @param none
+ * 
+ * @returns none
+ */
+function useItem(item) {
+    pInv.splice(pInv.indexOf(item),1);
+}
+/**
  * @name checkChoice
  * @description Checks statement to single word
  * 
