@@ -68,6 +68,7 @@ function hasItem(item) {
 function useItem(item) {
     pInv.splice(pInv.indexOf(item),1);
 }
+
 /**
  * @name checkChoice
  * @description Checks statement to single word
@@ -278,17 +279,26 @@ function checkCar() {
     let carChoice = "";
     let carChoicePrompts = ['start','look'];
     while(checkValidChoice(carChoice,carChoicePrompts) == 'invalid') carChoice = prompt(`You remember that you picked up your keys from the bedroom, do you want to [start] the car and leave the house or [look] around the garage?`);
-        carChoice = carChoice.toLowerCase();
+    carChoice = carChoice.toLowerCase();
+    //User [start]s the car and leaves.
+    if(carChoice == carChoicePrompts[0]) leaveGarage();
+    //User leaves the car and [look]s around again.
+    else console.log(`You leave the car and look around the garage again.`);   
 
-    if(carChoice == carChoicePrompts[0]) {
-        console.log(`LEAVE THE GARAGE FUNCTION`);
-        return carChoice;
-    }
-    else {
-        console.log(`You leave the car and look around the garage again.`);
-        return carChoice;
-    }
-        
+    return carChoice; 
+}
+
+/**
+ * @name leaveGarage
+ * @description User leaves the garage with the car and uses the key
+ * 
+ * @param none
+ * 
+ * @returns null
+ */
+function leaveGarage() {
+    useItem('keys');
+    console.log(`You did it, you left the garage!`);
 }
 
 //Calls the main game
